@@ -5,14 +5,14 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@fontsource/mulish':
+  '@fontsource/inter':
     specifier: ^5.0.18
     version: 5.0.18
   '@lucia-auth/adapter-drizzle':
     specifier: ^1.0.7
     version: 1.0.7(lucia@3.2.0)
   bits-ui:
-    specifier: ^0.21.4
+    specifier: ^0.21.7
     version: 0.21.7(svelte@5.0.0-next.106)
   clsx:
     specifier: ^2.1.0
@@ -26,6 +26,9 @@ dependencies:
   formsnap:
     specifier: ^1.0.0
     version: 1.0.0(svelte@5.0.0-next.106)(sveltekit-superforms@2.12.6)
+  lucide-svelte:
+    specifier: ^0.377.0
+    version: 0.377.0(svelte@5.0.0-next.106)
   oslo:
     specifier: ^1.2.0
     version: 1.2.0
@@ -813,8 +816,8 @@ packages:
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
     dev: false
 
-  /@fontsource/mulish@5.0.18:
-    resolution: {integrity: sha512-vcJcdhJpd10NLsWq5Op6++zEs5UhnVf1BdjvN1Uv+jOGmYD/PFTE/V8IxN1FO/jNY4x27gMdRy2mTMXU+ST6Kw==}
+  /@fontsource/inter@5.0.18:
+    resolution: {integrity: sha512-YCsoYPTcs713sI7tLtxaPrIhXAXvEetGg5Ry02ivA8qUOb3fQHojbK/X9HLD5OOKvFUNR2Ynkwb1kR1hVKQHpw==}
     dev: false
 
   /@gcornut/valibot-json-schema@0.0.27(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.2)(valibot@0.30.0):
@@ -3093,6 +3096,14 @@ packages:
     resolution: {integrity: sha512-eXMxXwk6hqtjRTj4W/x3EnTUtAztLPm0p2N2TEBMDEbakDLXiYnDQ9z/qahjPdPdhPguQc+vwO0/88zIWxlpuw==}
     dependencies:
       oslo: 1.2.0
+
+  /lucide-svelte@0.377.0(svelte@5.0.0-next.106):
+    resolution: {integrity: sha512-RUsf2d/tNQuDAgPpBfkhgXfho0VCw5dA7O2ZT/wpl0JVMJelGlASfx5IMZRU8jYOqWSp9UlUXWa4MvLp1GzuPQ==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
+    dependencies:
+      svelte: 5.0.0-next.106
+    dev: false
 
   /magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
