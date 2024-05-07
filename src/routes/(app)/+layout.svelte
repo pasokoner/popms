@@ -5,6 +5,7 @@
 	import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
 	import NavLink from "$lib/components/nav-link.svelte";
 	import { links } from "$lib/config";
+	import { LogOutIcon } from "lucide-svelte";
 
 	let sidebarOpen = $state(false);
 
@@ -35,7 +36,7 @@
 		<h1 class="text-center text-2xl font-bold">POPMS</h1>
 	</div>
 
-	<div class="flex flex-1 flex-col space-y-5 p-5">
+	<div class="flex flex-1 flex-col space-y-5 p-5 pb-12">
 		<ScrollArea class="flex-1">
 			{#each currentLinks as link}
 				<NavLink href={link.href} label={link.label} sublinks={link.sublinks}>
@@ -43,6 +44,13 @@
 				</NavLink>
 			{/each}
 		</ScrollArea>
+		<form method="post" action="/logout">
+			<input type="hidden" />
+			<Button variant="outline" type="submit" class="w-full gap-x-2 px-3 py-2 text-sm font-medium">
+				<LogOutIcon class="mr-2 h-5 w-5" />
+				Logout
+			</Button>
+		</form>
 	</div>
 </aside>
 
