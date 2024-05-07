@@ -6,3 +6,5 @@ import * as schema from "./schema";
 
 export const client = postgres(DATABASE_URL);
 export const db = drizzle(client, { schema });
+
+export default db;
