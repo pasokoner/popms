@@ -32,7 +32,7 @@
 	)}
 >
 	<div class="flex h-16 items-center justify-center border-b px-4 py-2">
-		<h1 class="text-center text-2xl font-bold">PMOS</h1>
+		<h1 class="text-center text-2xl font-bold">POPMS</h1>
 	</div>
 
 	<div class="flex flex-1 flex-col space-y-5 p-5">
@@ -49,5 +49,5 @@
 <div class="flex min-h-screen flex-col md:ml-64">
 	<header class="flex h-16 w-full items-center justify-between border-b" />
 
-	<main class="flex-1"><slot /></main>
+	<main class="container flex-1"><slot /></main>
 </div>
