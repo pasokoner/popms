@@ -13,7 +13,7 @@
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"db:generate": "drizzle-kit generate:pg --schema=./src/lib/server/db/schema/index.ts --out=./src/lib/server/db/migrations",
+		"db:generate": "drizzle-kit generate:pg",
 		"db:migrate": "bun run ./src/lib/server/db/migrate.ts",
 		"db:seed": "bun run ./src/lib/server/db/seed.ts",
 		"db:push": "drizzle-kit push:pg --config=./drizzle.config.ts"
