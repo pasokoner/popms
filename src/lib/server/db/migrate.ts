@@ -1,6 +1,5 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
-import * as schema from "$lib/server/db/schema";
 import postgres from "postgres";
 import * as dotenv from "dotenv";
 
@@ -14,7 +13,7 @@ const migrationClient = postgres(process.env.DATABASE_URL, { max: 1 });
 
 const main = async () => {
 	try {
-		await migrate(drizzle(migrationClient, { schema, logger: true }), {
+		await migrate(drizzle(migrationClient, { logger: true }), {
 			migrationsFolder: "src/lib/server/db/migrations"
 		});
 
