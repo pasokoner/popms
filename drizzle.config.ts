@@ -7,7 +7,7 @@ if (!process.env.DATABASE_URL) {
 }
 
 export default {
-	schema: "./src/lib/server/db/schema/index.ts",
+	schema: "./src/lib/server/db/schema.ts",
 	out: "./src/lib/server/db/migrations",
 	driver: "pg", // 'pg' | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
 	dbCredentials: {
