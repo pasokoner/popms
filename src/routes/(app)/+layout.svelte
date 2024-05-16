@@ -5,13 +5,14 @@
 	import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
 	import NavLink from "$lib/components/nav-link.svelte";
 	import { links } from "$lib/config";
-	import { LogOutIcon } from "lucide-svelte";
+	import { LogOutIcon, Building2Icon } from "lucide-svelte";
+	import type { UserRole } from "$lib/server/db/schema";
 
 	let sidebarOpen = $state(false);
 
-	let userType: "admin" = $state("admin");
+	let role: UserRole = $state("admin");
 
-	let currentLinks = $derived(links[userType]);
+	let currentLinks = $derived(links[role]);
 
 	function toggleSidebar() {
 		sidebarOpen = !sidebarOpen;
@@ -37,7 +38,18 @@
 	</div>
 
 	<div class="flex flex-1 flex-col space-y-5 p-5 pb-12">
+		{#if role !== "admin"}
+			<div class="flex items-center gap-x-3 px-1">
+				<Building2Icon class="size-10 rounded-full bg-gray-200 stroke-1 p-1.5" />
+				<div>
+					<div class="line-clamp-1 text-sm text-gray-900">Department of Trade Industry</div>
+					<div class="text-xs text-gray-500">DTI</div>
+				</div>
+			</div>
+		{/if}
+
 		<ScrollArea class="flex-1">
+			<div class="mb-2.5 text-xs font-medium text-gray-400">MENU</div>
 			{#each currentLinks as link}
 				<NavLink href={link.href} label={link.label} sublinks={link.sublinks}>
 					<svelte:component this={link.icon} class="h-5 w-5" />
@@ -57,5 +69,5 @@
 <div class="flex min-h-screen flex-col md:ml-64">
 	<header class="flex h-16 w-full items-center justify-between border-b" />
 
-	<main class="container flex-1"><slot /></main>
+	<main class="container flex-1 py-6"><slot /></main>
 </div>
