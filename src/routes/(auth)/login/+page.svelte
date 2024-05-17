@@ -17,8 +17,8 @@
 
 <main class="container flex max-w-md flex-1 flex-col items-center gap-y-6 py-24">
 	<div class="flex flex-col items-center space-y-4">
-		<div class="rounded-full border p-4">
-			<div class="rounded-full border bg-white p-3.5">
+		<div class="rounded-full border p-4 bg-gradient-to-b from-gray-200 to-white">
+			<div class="rounded-full border bg-white p-2">
 				<UserRoundIcon class="size-7 text-gray-500" />
 			</div>
 		</div>
