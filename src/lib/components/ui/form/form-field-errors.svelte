@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as FormPrimitive from "formsnap";
 	import { cn } from "$lib/utils.js";
+	import { CircleAlertIcon } from "lucide-svelte";
 
 	type $$Props = FormPrimitive.FieldErrorsProps & {
 		errorClasses?: string | undefined | null;
@@ -12,7 +13,7 @@
 </script>
 
 <FormPrimitive.FieldErrors
-	class={cn("text-sm font-medium text-destructive", className)}
+	class={cn("flex items-center gap-x-1 text-sm font-medium text-destructive", className)}
 	{...$$restProps}
 	let:errors
 	let:fieldErrorsAttrs
@@ -20,6 +21,7 @@
 >
 	<slot {errors} {fieldErrorsAttrs} {errorAttrs}>
 		{#each errors as error}
+			<CircleAlertIcon class="size-4 fill-red-700 text-white" />
 			<div {...errorAttrs} class={cn(errorClasses)}>{error}</div>
 		{/each}
 	</slot>

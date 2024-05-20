@@ -6,8 +6,14 @@ import { zod } from "sveltekit-superforms/adapters";
 import { verify } from "@node-rs/argon2";
 import db from "$lib/server/db";
 import { lucia } from "$lib/server/auth.js";
+import { getUserRedirect } from "$lib/server/user.js";
 
-export const load = async () => {
+export const load = async (event) => {
+	if (event.locals.user) {
+		const redirectPath = getUserRedirect(event.locals.user.role);
+		redirect(302, redirectPath);
+	}
+
 	return {
 		loginForm: await superValidate(zod(loginSchema))
 	};
@@ -47,6 +53,8 @@ export const actions: Actions = {
 			...sessionCookie.attributes
 		});
 
-		redirect(302, "/");
+		const redirectPath = getUserRedirect(existingUser.role);
+
+		redirect(302, redirectPath);
 	}
 };

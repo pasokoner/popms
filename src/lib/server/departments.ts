@@ -9,8 +9,8 @@ import { department, user } from "./db/schema";
 import postgres from "postgres";
 
 export async function createDepartmentAction(event: RequestEvent) {
-	if (!event.locals.user) redirect(302, "/login");
-	if (event.locals.user.role !== "admin") redirect(302, "/login");
+	// if (!event.locals.user) redirect(302, "/login");
+	// if (event.locals.user.role !== "admin") redirect(302, "/login");
 
 	const form = await superValidate(event, zod(createDepartmentSchema));
 
@@ -46,9 +46,7 @@ export async function createDepartmentAction(event: RequestEvent) {
 	} catch (e) {
 		// check for unique constraint error in user table
 		if (e instanceof postgres.PostgresError) {
-			console.log(e.constraint_name);
 			if (e.constraint_name === "auth_user_email_unique") {
-				console.log("WTFFF??");
 				return setError(form, "email", "Email already taken");
 			}
 		}
