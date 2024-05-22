@@ -11,10 +11,16 @@ import {
 } from "drizzle-orm/pg-core";
 
 const userRoles = ["department", "partner", "admin"] as const;
+const partnerProductRequestStatus = ["pending", "accepted", "rejected"] as const;
 
 export type UserRole = (typeof userRoles)[number];
+export type PartnerProductRequestStatus = (typeof partnerProductRequestStatus)[number];
 
 export const userRole = pgEnum("role", userRoles);
+export const partnerProductRequestStatusEnum = pgEnum(
+	"partner_product_request_status",
+	partnerProductRequestStatus
+);
 
 export const user = pgTable("auth_user", {
 	id: text("id").primaryKey(),
@@ -37,7 +43,6 @@ export const session = pgTable("session", {
 export const product = pgTable("product", {
 	id: uuid("id").defaultRandom().primaryKey(),
 	name: text("name").notNull(),
-	price: numeric("price", { precision: 12, scale: 2 }).notNull(),
 	unit: text("unit").notNull(),
 	departmentId: uuid("department_id")
 		.notNull()
@@ -102,6 +107,42 @@ export const partner = pgTable(
 	}
 );
 
+export const partnerProduct = pgTable(
+	"partner_product",
+	{
+		id: uuid("id").defaultRandom().primaryKey(),
+		price: numeric("price", { precision: 12, scale: 2 }).notNull(),
+		partnerId: uuid("partner_id")
+			.notNull()
+			.references(() => partner.id),
+		productId: uuid("product_id")
+			.notNull()
+			.references(() => product.id)
+	},
+	(table) => {
+		return {
+			uniquePartnerProduct: unique().on(table.partnerId, table.productId)
+		};
+	}
+);
+
+export const partnerProductRequest = pgTable("partner_product_request", {
+	id: uuid("id").defaultRandom().primaryKey(),
+	price: numeric("price", { precision: 12, scale: 2 }).notNull(),
+	status: partnerProductRequestStatusEnum("status").notNull().default("pending"),
+	partnerProductId: uuid("partner_product_id").references(() => partnerProduct.id),
+	updatedAt: timestamp("updated_at", {
+		mode: "string"
+	})
+		.notNull()
+		.defaultNow(),
+	createdAt: timestamp("created_at", {
+		mode: "string"
+	})
+		.notNull()
+		.defaultNow()
+});
+
 export const departmentRelations = relations(department, ({ one, many }) => ({
 	owner: one(user, {
 		fields: [department.ownerId],
@@ -117,10 +158,30 @@ export const partnerRelations = relations(partner, ({ one }) => ({
 	})
 }));
 
-export const productRelations = relations(product, ({ one }) => ({
+export const productRelations = relations(product, ({ one, many }) => ({
 	department: one(department, {
 		fields: [product.departmentId],
 		references: [department.id]
+	}),
+	partnerProducts: many(partnerProduct)
+}));
+
+export const partnerProductRelations = relations(partnerProduct, ({ one, many }) => ({
+	partner: one(partner, {
+		fields: [partnerProduct.partnerId],
+		references: [partner.id]
+	}),
+	product: one(product, {
+		fields: [partnerProduct.productId],
+		references: [product.id]
+	}),
+	partnerProductRequests: many(partnerProductRequest)
+}));
+
+export const partnerProductRequestRelations = relations(partnerProductRequest, ({ one }) => ({
+	partnerProduct: one(partnerProduct, {
+		fields: [partnerProductRequest.id],
+		references: [partnerProduct.id]
 	})
 }));
 
