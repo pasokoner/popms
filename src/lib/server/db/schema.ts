@@ -10,7 +10,7 @@ import {
 	pgEnum
 } from "drizzle-orm/pg-core";
 
-const userRoles = ["owner", "partner", "admin"] as const;
+const userRoles = ["department", "partner", "admin"] as const;
 
 export type UserRole = (typeof userRoles)[number];
 
@@ -39,7 +39,6 @@ export const product = pgTable("product", {
 	name: text("name").notNull(),
 	price: numeric("price", { precision: 12, scale: 2 }).notNull(),
 	unit: text("unit").notNull(),
-	municipality: text("municipality").notNull(),
 	departmentId: uuid("department_id")
 		.notNull()
 		.references(() => department.id),
@@ -74,26 +73,11 @@ export const department = pgTable("department", {
 		.references(() => user.id)
 });
 
-// Multiple owner per department & multiple department per owner
-// export const departmentOwner = pgTable(
-// 	"department_owner",
-// 	{
-// 		id: uuid("id").defaultRandom().primaryKey(),
-// 		departmentId: uuid("department_id")
-// 			.notNull()
-// 			.references(() => department.id)
-// 	},
-// 	(table) => {
-// 		return {
-// 			uniqueOwner: unique().on(table.departmentId, table.ownerId)
-// 		};
-// 	}
-// );
-
 export const partner = pgTable(
 	"partner",
 	{
 		id: uuid("id").defaultRandom().primaryKey(),
+		name: varchar("name", { length: 255 }).notNull(),
 		departmentId: uuid("department_id")
 			.notNull()
 			.references(() => department.id),
@@ -118,16 +102,37 @@ export const partner = pgTable(
 	}
 );
 
-export const departmentRelations = relations(department, ({ one }) => ({
+export const departmentRelations = relations(department, ({ one, many }) => ({
 	owner: one(user, {
 		fields: [department.ownerId],
 		references: [user.id]
+	}),
+	partners: many(partner)
+}));
+
+export const partnerRelations = relations(partner, ({ one }) => ({
+	department: one(department, {
+		fields: [partner.departmentId],
+		references: [department.id]
+	})
+}));
+
+export const productRelations = relations(product, ({ one }) => ({
+	department: one(department, {
+		fields: [product.departmentId],
+		references: [department.id]
 	})
 }));
 
 export type User = InferSelectModel<typeof user>;
 export type Department = InferSelectModel<typeof department>;
+export type Partner = InferSelectModel<typeof partner>;
+export type Product = InferSelectModel<typeof product>;
 
 export type DepartmentWithOwner = Department & {
 	owner: Omit<User, "hashedPassword">;
+};
+
+export type PartnerWithUser = Partner & {
+	user: Omit<User, "hashedPassword">;
 };

@@ -1,5 +1,6 @@
 import type { ComponentType } from "svelte";
-import { HandshakeIcon, LayoutDashboardIcon } from "lucide-svelte";
+import { UsersRoundIcon, LayoutDashboardIcon, HandshakeIcon, BoxIcon } from "lucide-svelte";
+import type { UserRole } from "./server/db/schema";
 
 export type BaseLink = {
 	href: `/${string}`;
@@ -10,18 +11,16 @@ export type BaseLink = {
 export type SubLink = Omit<BaseLink, "icon">;
 
 export const links: Record<
-	"admin",
+	UserRole,
 	(BaseLink & {
 		sublinks?: SubLink[];
 	})[]
 > = {
-	admin: [
-		{ href: "/app/admin/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
-		{
-			href: "/app/admin/partners",
-			label: "Partners",
-			icon: HandshakeIcon,
-			sublinks: [{ href: "/app/admin/partners/traders", label: "Traders" }]
-		}
-	]
+	admin: [{ href: "/admin/departments", label: "Departments", icon: UsersRoundIcon }],
+	department: [
+		{ href: "/department/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
+		{ href: "/department/products", label: "Products", icon: BoxIcon },
+		{ href: "/department/partners", label: "Partners", icon: HandshakeIcon }
+	],
+	partner: [{ href: "/partner/dashboard", label: "Dashboard", icon: LayoutDashboardIcon }]
 };

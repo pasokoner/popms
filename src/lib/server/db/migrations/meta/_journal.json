@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1715838596241,
+      "tag": "0000_tranquil_satana",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1715841546151,
+      "tag": "0001_wide_prism",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1716171902302,
+      "tag": "0002_sturdy_proteus",
+      "breakpoints": true
+    }
+  ]
+}

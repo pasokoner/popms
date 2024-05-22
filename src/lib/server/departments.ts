@@ -34,7 +34,7 @@ export async function createDepartmentAction(event: RequestEvent) {
 					id: userId,
 					email: email,
 					hashedPassword: hashedPassword,
-					role: "owner"
+					role: "department"
 				})
 				.execute();
 
@@ -65,6 +65,15 @@ export async function getDepartmentWithOwner() {
 					hashedPassword: false
 				}
 			}
+		}
+	});
+}
+
+export async function getDepartmentWithPartnersByOwnerId(id: string) {
+	return await db.query.department.findFirst({
+		where: (department, { eq }) => eq(department.ownerId, id),
+		with: {
+			partners: true
 		}
 	});
 }

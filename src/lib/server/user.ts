@@ -9,9 +9,9 @@ export function getUserRedirect(role: UserRole) {
 	switch (role) {
 		case "admin":
 			return "/admin";
-		case "owner":
+		case "department":
 			return "/department/dashboard";
 		case "partner":
-			return "/admin/partners";
+			return "/partner/dashboard";
 	}
 }
