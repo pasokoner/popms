@@ -6,11 +6,12 @@
 	import NavLink from "$lib/components/nav-link.svelte";
 	import { links } from "$lib/config";
 	import { LogOutIcon, Building2Icon } from "lucide-svelte";
-	import type { UserRole } from "$lib/server/db/schema";
+
+	let { data } = $props();
 
 	let sidebarOpen = $state(false);
 
-	let role: UserRole = $state("admin");
+	let role = $derived(data.user.role);
 
 	let currentLinks = $derived(links[role]);
 
