@@ -22,6 +22,13 @@
       "when": 1716171902302,
       "tag": "0002_sturdy_proteus",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1716337615625,
+      "tag": "0003_nosy_aqueduct",
+      "breakpoints": true
     }
   ]
 }
