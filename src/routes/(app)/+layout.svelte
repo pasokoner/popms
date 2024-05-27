@@ -70,5 +70,5 @@
 <div class="flex min-h-screen flex-col md:ml-64">
 	<header class="flex h-16 w-full items-center justify-between border-b" />
 
-	<main class="container flex-1 py-6"><slot /></main>
+	<main class="container flex-1 pb-40 pt-6"><slot /></main>
 </div>
