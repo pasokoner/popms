@@ -1,7 +1,9 @@
 <script lang="ts">
-	import DepartmentEditSheetForm from "$lib/components/department-edit-sheet-form.svelte";
+	import PartnerEditSheetForm from "$lib/components/partner/partner-edit-sheet-form.svelte";
+	import type { PartnerWithUser } from "$lib/server/db/schema";
+	import { page } from "$app/stores";
 
-	let { id }: { id: string } = $props();
+	let { partner }: { partner: PartnerWithUser } = $props();
 </script>
 
-<DepartmentEditSheetForm {id} />
+<PartnerEditSheetForm {partner} theForm={$page.data.editPartnerForm} />

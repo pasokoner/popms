@@ -1,6 +1,7 @@
 import { getDepartmentWithPartnersByOwnerId } from "$lib/server/departments";
 import { error, redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
+import { createPartnerAction, editPartnerAction } from "$lib/server/partners";
 
 export const load: PageServerLoad = async (event) => {
 	const { user } = event.locals;
@@ -12,4 +13,9 @@ export const load: PageServerLoad = async (event) => {
 	return {
 		department
 	};
+};
+
+export const actions: Actions = {
+	createPartner: createPartnerAction,
+	editPartner: editPartnerAction
 };

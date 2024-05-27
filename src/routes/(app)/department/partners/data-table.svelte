@@ -1,34 +1,44 @@
 <script lang="ts">
 	import { createTable, Render, Subscribe, createRender } from "svelte-headless-table";
-	import { readable } from "svelte/store";
+	import { readable, writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
 	import DataTableActions from "./data-actions.svelte";
 	import type { PartnerWithUser } from "$lib/server/db/schema.ts";
 
 	let { data = [] }: { data: PartnerWithUser[] } = $props();
 
-	const table = createTable(readable(data));
+	const partners = writable(data);
+
+	const table = createTable(partners);
 
 	const columns = table.createColumns([
 		table.column({
 			accessor: "name",
 			header: "Name"
 		}),
-
+		table.column({
+			accessor: (partner) => partner.user.email,
+			id: "email",
+			header: "Email"
+		}),
 		table.column({
 			accessor: "updatedAt",
 			header: "Updated At"
 		}),
 		table.column({
-			accessor: ({ id }) => id,
+			accessor: (partner) => partner,
 			header: "Action",
 			cell: ({ value }) => {
-				return createRender(DataTableActions, { id: value });
+				return createRender(DataTableActions, { partner: value });
 			}
 		})
 	]);
 
 	const { headerRows, pageRows, tableAttrs, tableBodyAttrs } = table.createViewModel(columns);
+
+	$effect(() => {
+		$partners = data;
+	});
 </script>
 
 <div class="rounded-md border">
