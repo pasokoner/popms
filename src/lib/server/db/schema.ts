@@ -1,4 +1,4 @@
-import { relations, type InferSelectModel } from "drizzle-orm";
+import { Many, relations, type InferSelectModel } from "drizzle-orm";
 import {
 	pgTable,
 	timestamp,
@@ -43,6 +43,7 @@ export const session = pgTable("session", {
 export const product = pgTable("product", {
 	id: uuid("id").defaultRandom().primaryKey(),
 	name: text("name").notNull(),
+	quantity: numeric("quantity", { precision: 12, scale: 2 }).notNull(),
 	unit: text("unit").notNull(),
 	departmentId: uuid("department_id")
 		.notNull()
@@ -148,14 +149,20 @@ export const departmentRelations = relations(department, ({ one, many }) => ({
 		fields: [department.ownerId],
 		references: [user.id]
 	}),
-	partners: many(partner)
+	partners: many(partner),
+	products: many(product)
 }));
 
-export const partnerRelations = relations(partner, ({ one }) => ({
+export const partnerRelations = relations(partner, ({ one, many }) => ({
 	department: one(department, {
 		fields: [partner.departmentId],
 		references: [department.id]
-	})
+	}),
+	user: one(user, {
+		fields: [partner.userId],
+		references: [user.id]
+	}),
+	partnerProducts: many(partnerProduct)
 }));
 
 export const productRelations = relations(product, ({ one, many }) => ({
@@ -189,6 +196,8 @@ export type User = InferSelectModel<typeof user>;
 export type Department = InferSelectModel<typeof department>;
 export type Partner = InferSelectModel<typeof partner>;
 export type Product = InferSelectModel<typeof product>;
+export type PartnerProduct = InferSelectModel<typeof partnerProduct>;
+export type PartnerProductRequest = InferSelectModel<typeof partnerProductRequest>;
 
 export type DepartmentWithOwner = Department & {
 	owner: Omit<User, "hashedPassword">;
