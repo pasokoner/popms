@@ -9,8 +9,8 @@ import { department, user } from "./db/schema";
 import postgres from "postgres";
 
 export async function createDepartmentAction(event: RequestEvent) {
-	// if (!event.locals.user) redirect(302, "/login");
-	// if (event.locals.user.role !== "admin") redirect(302, "/login");
+	if (!event.locals.user) redirect(302, "/login");
+	if (event.locals.user.role !== "admin") redirect(302, "/login");
 
 	const form = await superValidate(event, zod(createDepartmentSchema));
 
@@ -73,7 +73,17 @@ export async function getDepartmentWithPartnersByOwnerId(id: string) {
 	return await db.query.department.findFirst({
 		where: (department, { eq }) => eq(department.ownerId, id),
 		with: {
-			partners: true
+			partners: {
+				with: {
+					user: true
+				}
+			}
 		}
+	});
+}
+
+export async function getDepartmentByOwnerId(id: string) {
+	return await db.query.department.findFirst({
+		where: (department, { eq }) => eq(department.ownerId, id)
 	});
 }
