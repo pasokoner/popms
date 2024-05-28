@@ -36,6 +36,20 @@
       "when": 1716340618012,
       "tag": "0004_worried_power_man",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1716533302909,
+      "tag": "0005_nostalgic_hulk",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1716876845728,
+      "tag": "0006_luxuriant_jubilee",
+      "breakpoints": true
     }
   ]
 }

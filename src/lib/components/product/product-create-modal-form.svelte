@@ -45,7 +45,6 @@
 			...$formData.products,
 			{
 				name: "",
-				quantity: "0",
 				unit: ""
 			}
 		];
@@ -80,27 +79,17 @@
 							<Form.FieldErrors />
 						</Form.ElementField>
 
-						<div class="grid grid-cols-2 gap-x-2">
-							<Form.ElementField {form} name="products[{i}].quantity">
-								<Form.Control let:attrs>
-									<Form.Label>Quantity</Form.Label>
-									<Input {...attrs} bind:value={$formData.products[i].quantity} />
-								</Form.Control>
-								<Form.FieldErrors />
-							</Form.ElementField>
-
-							<Form.ElementField {form} name="products[{i}].unit">
-								<Form.Control let:attrs>
-									<Form.Label>Unit</Form.Label>
-									<Input
-										{...attrs}
-										bind:value={$formData.products[i].unit}
-										placeholder="Ex. kg, pcs, g, ml, L"
-									/>
-								</Form.Control>
-								<Form.FieldErrors />
-							</Form.ElementField>
-						</div>
+						<Form.ElementField {form} name="products[{i}].unit">
+							<Form.Control let:attrs>
+								<Form.Label>Unit</Form.Label>
+								<Input
+									{...attrs}
+									bind:value={$formData.products[i].unit}
+									placeholder="Ex. kg, pcs, g, ml, L"
+								/>
+							</Form.Control>
+							<Form.FieldErrors />
+						</Form.ElementField>
 
 						<Button
 							variant="destructive"

@@ -1,4 +1,4 @@
-import { Many, relations, type InferSelectModel } from "drizzle-orm";
+import { relations, type InferSelectModel } from "drizzle-orm";
 import {
 	pgTable,
 	timestamp,
@@ -43,7 +43,6 @@ export const session = pgTable("session", {
 export const product = pgTable("product", {
 	id: uuid("id").defaultRandom().primaryKey(),
 	name: text("name").notNull(),
-	quantity: numeric("quantity", { precision: 12, scale: 2 }).notNull(),
 	unit: text("unit").notNull(),
 	departmentId: uuid("department_id")
 		.notNull()

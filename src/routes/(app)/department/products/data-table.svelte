@@ -17,10 +17,6 @@
 			header: "Name"
 		}),
 		table.column({
-			accessor: "quantity",
-			header: "Quantity"
-		}),
-		table.column({
 			accessor: "unit",
 			header: "Unit"
 		}),

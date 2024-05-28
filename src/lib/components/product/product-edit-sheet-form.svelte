@@ -41,7 +41,7 @@
 	const { form: formData, enhance, submitting } = form;
 
 	$effect(() => {
-		$formData = { ...product, quantity: String(product.quantity), productId: product.id };
+		$formData = { ...product, productId: product.id };
 	});
 </script>
 
@@ -73,23 +73,13 @@
 				<Form.FieldErrors />
 			</Form.Field>
 
-			<div class="grid grid-cols-2 gap-x-2">
-				<Form.Field {form} name="quantity">
-					<Form.Control let:attrs>
-						<Form.Label>Quantity</Form.Label>
-						<Input {...attrs} bind:value={$formData.quantity} />
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-
-				<Form.Field {form} name="unit">
-					<Form.Control let:attrs>
-						<Form.Label>Unit</Form.Label>
-						<Input {...attrs} bind:value={$formData.unit} placeholder="Ex. kg, pcs, g, ml, L" />
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-			</div>
+			<Form.Field {form} name="unit">
+				<Form.Control let:attrs>
+					<Form.Label>Unit</Form.Label>
+					<Input {...attrs} bind:value={$formData.unit} placeholder="Ex. kg, pcs, g, ml, L" />
+				</Form.Control>
+				<Form.FieldErrors />
+			</Form.Field>
 		</form>
 
 		<Separator />

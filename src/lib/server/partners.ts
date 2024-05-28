@@ -72,6 +72,8 @@ export async function editPartnerAction(event: RequestEvent) {
 
 	if (!department) error(404, "Department not found");
 
+	// TODO: CHECK IF DEPARTMENT OWNS THE PRODUCT
+
 	const form = await superValidate(event, zod(editPartnerSchema));
 
 	if (!form.valid) return fail(400, { form });
@@ -79,8 +81,6 @@ export async function editPartnerAction(event: RequestEvent) {
 	const { email, password, name, userId } = form.data;
 
 	let hashedPassword: string | undefined;
-
-	console.log(form.data);
 
 	try {
 		await db.transaction(async (tx) => {

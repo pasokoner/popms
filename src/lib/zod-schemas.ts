@@ -37,7 +37,6 @@ export const createProductSchema = z.object({
 		.array(
 			z.object({
 				name: z.string().min(1, { message: "Type your product name here" }),
-				quantity: z.string().refine((v) => Number(v) > 0, { message: "Invalid quantity" }),
 				unit: z.string().min(1, { message: "Type your product unit here" })
 			})
 		)
@@ -45,7 +44,6 @@ export const createProductSchema = z.object({
 		.default([
 			{
 				name: "",
-				quantity: "0",
 				unit: ""
 			}
 		])
@@ -53,7 +51,6 @@ export const createProductSchema = z.object({
 
 export const editProductSchema = z.object({
 	name: z.string().min(1, { message: "Type your product name here" }),
-	quantity: z.string().refine((v) => Number(v) > 0, { message: "Invalid quantity" }),
 	unit: z.string().min(1, { message: "Type your product unit here" }),
 	productId: z.string().uuid()
 });
