@@ -42,9 +42,9 @@
 		{#if role !== "admin"}
 			<div class="flex items-center gap-x-3 px-1">
 				<Building2Icon class="size-10 rounded-full bg-gray-200 stroke-1 p-1.5" />
-				<div>
-					<div class="line-clamp-1 text-sm text-gray-900">Department of Trade Industry</div>
-					<div class="text-xs text-gray-500">DTI</div>
+				<div class="flex-1">
+					<div class="line-clamp-2 text-xs text-gray-950">{data.user.name}</div>
+					<div class="text-xs capitalize text-gray-500">{data.user.role}</div>
 				</div>
 			</div>
 		{/if}
