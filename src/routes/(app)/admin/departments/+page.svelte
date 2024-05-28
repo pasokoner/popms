@@ -4,8 +4,6 @@
 	import DataTable from "./data-table.svelte";
 
 	let { data } = $props();
-
-	$inspect(data.departmentWithOwner);
 </script>
 
 <div class="space-y-5">
