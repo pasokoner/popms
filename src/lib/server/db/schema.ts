@@ -86,7 +86,7 @@ export const partner = pgTable(
 		departmentId: uuid("department_id")
 			.notNull()
 			.references(() => department.id),
-		userId: text("user_id")
+		ownerId: text("owner_id")
 			.notNull()
 			.references(() => user.id),
 		createdAt: timestamp("created_at", {
@@ -102,7 +102,7 @@ export const partner = pgTable(
 	},
 	(table) => {
 		return {
-			uniquePartner: unique().on(table.departmentId, table.userId)
+			uniquePartner: unique().on(table.departmentId, table.ownerId)
 		};
 	}
 );
@@ -158,7 +158,7 @@ export const partnerRelations = relations(partner, ({ one, many }) => ({
 		references: [department.id]
 	}),
 	user: one(user, {
-		fields: [partner.userId],
+		fields: [partner.ownerId],
 		references: [user.id]
 	}),
 	partnerProducts: many(partnerProduct)

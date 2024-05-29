@@ -46,7 +46,7 @@ export async function createPartnerAction(event: RequestEvent) {
 
 			await tx.insert(partner).values({
 				departmentId: department.id,
-				userId: userId,
+				ownerId: userId,
 				name: name
 			});
 		});
@@ -106,7 +106,7 @@ export async function editPartnerAction(event: RequestEvent) {
 				.set({
 					name: name
 				})
-				.where(eq(partner.userId, userId));
+				.where(eq(partner.ownerId, userId));
 		});
 	} catch (e) {
 		// check for unique constraint error in user table

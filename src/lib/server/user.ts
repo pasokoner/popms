@@ -1,9 +1,10 @@
 import { redirect, type RequestEvent } from "@sveltejs/kit";
 import db from "./db";
-import type { UserRole } from "./db/schema";
+import { type UserRole } from "./db/schema";
 
 type UserDetails = {
 	name: string;
+	ownerId: string;
 };
 
 export async function getUserByEmail(email: string) {
@@ -16,7 +17,8 @@ export async function getUserDetails(event: RequestEvent) {
 	const { id, role } = event.locals.user;
 
 	const defaultDetails: UserDetails = {
-		name: ""
+		name: "",
+		ownerId: ""
 	};
 
 	let details: UserDetails | undefined;
@@ -27,7 +29,7 @@ export async function getUserDetails(event: RequestEvent) {
 		});
 	} else if (role === "partner") {
 		details = await db.query.partner.findFirst({
-			where: (partner, { eq }) => eq(partner.userId, id)
+			where: (partner, { eq }) => eq(partner.ownerId, id)
 		});
 	}
 
