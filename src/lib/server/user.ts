@@ -1,10 +1,12 @@
 import { redirect, type RequestEvent } from "@sveltejs/kit";
 import db from "./db";
-import { type UserRole } from "./db/schema";
+import { department, partner, type UserRole } from "./db/schema";
+import { sql } from "drizzle-orm";
 
 type UserDetails = {
 	name: string;
-	ownerId: string;
+	groupId: string;
+	departmentId: string;
 };
 
 export async function getUserByEmail(email: string) {
@@ -18,18 +20,26 @@ export async function getUserDetails(event: RequestEvent) {
 
 	const defaultDetails: UserDetails = {
 		name: "",
-		ownerId: ""
+		groupId: "",
+		departmentId: ""
 	};
 
 	let details: UserDetails | undefined;
 
 	if (role === "department") {
 		details = await db.query.department.findFirst({
-			where: (dept, { eq }) => eq(dept.ownerId, id)
+			where: (dept, { eq }) => eq(dept.ownerId, id),
+			extras: {
+				groupId: sql<string>`${department.id}`.as("group_id"),
+				departmentId: sql<string>`${department.id}`.as("department_id")
+			}
 		});
 	} else if (role === "partner") {
 		details = await db.query.partner.findFirst({
-			where: (partner, { eq }) => eq(partner.ownerId, id)
+			where: (partner, { eq }) => eq(partner.ownerId, id),
+			extras: {
+				groupId: sql<string>`${partner.id}`.as("group_id")
+			}
 		});
 	}
 
