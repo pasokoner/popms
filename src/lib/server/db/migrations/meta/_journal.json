@@ -50,6 +50,20 @@
       "when": 1716876845728,
       "tag": "0006_luxuriant_jubilee",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1716967563703,
+      "tag": "0007_lumpy_mimic",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1717393636237,
+      "tag": "0008_small_lucky_pierre",
+      "breakpoints": true
     }
   ]
 }

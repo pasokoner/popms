@@ -107,36 +107,22 @@ export const partner = pgTable(
 	}
 );
 
-export const partnerProduct = pgTable(
-	"partner_product",
-	{
-		id: uuid("id").defaultRandom().primaryKey(),
-		price: numeric("price", { precision: 12, scale: 2 }).notNull(),
-		partnerId: uuid("partner_id")
-			.notNull()
-			.references(() => partner.id),
-		productId: uuid("product_id")
-			.notNull()
-			.references(() => product.id)
-	},
-	(table) => {
-		return {
-			uniquePartnerProduct: unique().on(table.partnerId, table.productId)
-		};
-	}
-);
-
-export const partnerProductRequest = pgTable("partner_product_request", {
+export const partnerProduct = pgTable("partner_product", {
 	id: uuid("id").defaultRandom().primaryKey(),
 	price: numeric("price", { precision: 12, scale: 2 }).notNull(),
 	status: partnerProductRequestStatusEnum("status").notNull().default("pending"),
-	partnerProductId: uuid("partner_product_id").references(() => partnerProduct.id),
-	updatedAt: timestamp("updated_at", {
+	partnerId: uuid("partner_id")
+		.notNull()
+		.references(() => partner.id),
+	productId: uuid("product_id")
+		.notNull()
+		.references(() => product.id),
+	createdAt: timestamp("created_at", {
 		mode: "string"
 	})
 		.notNull()
 		.defaultNow(),
-	createdAt: timestamp("created_at", {
+	updatedAt: timestamp("updated_at", {
 		mode: "string"
 	})
 		.notNull()
@@ -172,7 +158,7 @@ export const productRelations = relations(product, ({ one, many }) => ({
 	partnerProducts: many(partnerProduct)
 }));
 
-export const partnerProductRelations = relations(partnerProduct, ({ one, many }) => ({
+export const partnerProductRelations = relations(partnerProduct, ({ one }) => ({
 	partner: one(partner, {
 		fields: [partnerProduct.partnerId],
 		references: [partner.id]
@@ -180,14 +166,6 @@ export const partnerProductRelations = relations(partnerProduct, ({ one, many })
 	product: one(product, {
 		fields: [partnerProduct.productId],
 		references: [product.id]
-	}),
-	partnerProductRequests: many(partnerProductRequest)
-}));
-
-export const partnerProductRequestRelations = relations(partnerProductRequest, ({ one }) => ({
-	partnerProduct: one(partnerProduct, {
-		fields: [partnerProductRequest.id],
-		references: [partnerProduct.id]
 	})
 }));
 
@@ -196,7 +174,6 @@ export type Department = InferSelectModel<typeof department>;
 export type Partner = InferSelectModel<typeof partner>;
 export type Product = InferSelectModel<typeof product>;
 export type PartnerProduct = InferSelectModel<typeof partnerProduct>;
-export type PartnerProductRequest = InferSelectModel<typeof partnerProductRequest>;
 
 export type DepartmentWithOwner = Department & {
 	owner: Omit<User, "hashedPassword">;
@@ -204,4 +181,8 @@ export type DepartmentWithOwner = Department & {
 
 export type PartnerWithUser = Partner & {
 	user: Omit<User, "hashedPassword">;
+};
+
+export type PartnerProductWithProduct = PartnerProduct & {
+	product: Product;
 };
