@@ -30,7 +30,12 @@
 				toast.success("New product/s created", {
 					position: "top-center"
 				});
+				return;
 			}
+
+			toast.error(event.form.errors._errors?.[0] || "Something went wrong", {
+				position: "top-center"
+			});
 		}
 	});
 

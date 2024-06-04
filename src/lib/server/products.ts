@@ -6,6 +6,7 @@ import { getDepartmentByOwnerId } from "./departments";
 import db from "./db";
 import { product } from "./db/schema";
 import { eq } from "drizzle-orm";
+import postgres from "postgres";
 
 export async function createProductAction(event: RequestEvent) {
 	if (!event.locals.user) redirect(302, "/login");
@@ -27,6 +28,12 @@ export async function createProductAction(event: RequestEvent) {
 
 		await db.insert(product).values(newProducts).execute();
 	} catch (e) {
+		if (e instanceof postgres.PostgresError) {
+			if (e.constraint_name === "unique_product") {
+				return setError(form, "", "Product with the same name & unit already exist");
+			}
+		}
+
 		return setError(form, "", "Unable to add product");
 	}
 
