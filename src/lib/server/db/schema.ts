@@ -40,24 +40,32 @@ export const session = pgTable("session", {
 	}).notNull()
 });
 
-export const product = pgTable("product", {
-	id: uuid("id").defaultRandom().primaryKey(),
-	name: text("name").notNull(),
-	unit: text("unit").notNull(),
-	departmentId: uuid("department_id")
-		.notNull()
-		.references(() => department.id),
-	createdAt: timestamp("created_at", {
-		mode: "string"
-	})
-		.notNull()
-		.defaultNow(),
-	updatedAt: timestamp("updated_at", {
-		mode: "string"
-	})
-		.notNull()
-		.defaultNow()
-});
+export const product = pgTable(
+	"product",
+	{
+		id: uuid("id").defaultRandom().primaryKey(),
+		name: text("name").notNull(),
+		unit: text("unit").notNull(),
+		departmentId: uuid("department_id")
+			.notNull()
+			.references(() => department.id),
+		createdAt: timestamp("created_at", {
+			mode: "string"
+		})
+			.notNull()
+			.defaultNow(),
+		updatedAt: timestamp("updated_at", {
+			mode: "string"
+		})
+			.notNull()
+			.defaultNow()
+	},
+	(table) => {
+		return {
+			uniqueProduct: unique("unique_product").on(table.name, table.unit)
+		};
+	}
+);
 
 export const department = pgTable("department", {
 	id: uuid("id").defaultRandom().primaryKey(),
