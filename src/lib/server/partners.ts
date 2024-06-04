@@ -127,3 +127,9 @@ export async function getPartnersByDepartmentID(id: string) {
 		where: (partner, { eq }) => eq(partner.departmentId, id)
 	});
 }
+
+export async function getPartnerByOwnerId(id: string) {
+	return await db.query.partner.findMany({
+		where: (partner, { eq }) => eq(partner.ownerId, id)
+	});
+}

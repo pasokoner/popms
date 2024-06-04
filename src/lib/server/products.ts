@@ -69,3 +69,33 @@ export async function getDepartmentWithProductByOwnerId(id: string) {
 		}
 	});
 }
+
+export async function getProductsByDepartmentId(id: string) {
+	return await db.query.product.findMany({
+		where: (product, { eq }) => eq(product.departmentId, id),
+		orderBy: (product, { asc }) => asc(product.name)
+	});
+}
+
+export async function getTrackedProductByPartnerId(id: string) {
+	return await db.query.partnerProduct.findMany({
+		where: (partnerProduct, { eq, and }) =>
+			and(eq(partnerProduct.partnerId, id), eq(partnerProduct.status, "accepted")),
+		with: {
+			product: true
+		},
+		orderBy: (partnerProduct, { asc }) => asc(partnerProduct.updatedAt),
+		limit: 1
+	});
+}
+
+export async function getPendingProductByPartnerId(id: string) {
+	return await db.query.partnerProduct.findMany({
+		where: (partnerProduct, { and, eq }) =>
+			and(eq(partnerProduct.partnerId, id), eq(partnerProduct.status, "pending")),
+		with: {
+			product: true
+		},
+		orderBy: (partnerProduct, { desc }) => desc(partnerProduct.createdAt)
+	});
+}

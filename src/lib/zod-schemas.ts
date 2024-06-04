@@ -55,9 +55,21 @@ export const editProductSchema = z.object({
 	productId: z.string().uuid()
 });
 
+export const priceChangeRequestSchema = z.object({
+	products: z
+		.array(
+			z.object({
+				productId: z.string().uuid(),
+				price: z.string().refine((v) => Number(v) > 0)
+			})
+		)
+		.min(1)
+});
+
 export type LoginSchema = typeof loginSchema;
 export type CreateDepartmentSchema = typeof createDepartmentSchema;
 export type CreatePartnerSchema = typeof createPartnerSchema;
 export type EditPartnerSchema = typeof editPartnerSchema;
 export type CreateProductSchema = typeof createProductSchema;
 export type EditProductSchema = typeof editProductSchema;
+export type PriceChangeRequestSchema = typeof priceChangeRequestSchema;
