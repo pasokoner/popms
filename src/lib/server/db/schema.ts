@@ -91,6 +91,7 @@ export const partner = pgTable(
 	{
 		id: uuid("id").defaultRandom().primaryKey(),
 		name: varchar("name", { length: 255 }).notNull(),
+		municipality: text("municipality").notNull(),
 		departmentId: uuid("department_id")
 			.notNull()
 			.references(() => department.id),
