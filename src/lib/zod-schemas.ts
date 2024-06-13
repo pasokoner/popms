@@ -15,7 +15,8 @@ export const createDepartmentSchema = createUserSchema.extend({
 });
 
 export const createPartnerSchema = createUserSchema.extend({
-	name: z.string().min(1, { message: "Type your partner name here" })
+	name: z.string().min(1, { message: "Type your partner name here" }),
+	municipality: z.string().min(1, { message: "Type your municipality here" })
 });
 
 export const editPartnerSchema = createPartnerSchema.extend({

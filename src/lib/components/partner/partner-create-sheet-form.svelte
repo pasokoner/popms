@@ -4,6 +4,8 @@
 	import * as Form from "$lib/components/ui/form";
 	import { Input } from "$lib/components/ui/input";
 	import Separator from "$lib/components/ui/separator/separator.svelte";
+	import * as Select from "$lib/components/ui/select/index.js";
+
 	import * as Sheet from "$lib/components/ui/sheet";
 
 	import { LoaderCircleIcon, PlusIcon } from "lucide-svelte";
@@ -12,6 +14,7 @@
 	import { createPartnerSchema, type CreatePartnerSchema } from "$lib/zod-schemas";
 	import { type SuperValidated, type Infer, superForm } from "sveltekit-superforms";
 	import { zodClient } from "sveltekit-superforms/adapters";
+	import { MUNICIPALITIES } from "$lib/config";
 
 	let {
 		data
@@ -19,11 +22,27 @@
 		data: SuperValidated<Infer<CreatePartnerSchema>>;
 	} = $props();
 
+	// TODO: Find out why it errors
+	// why the fck it errors when using dataType: "form"
 	const form = superForm(data, {
-		validators: zodClient(createPartnerSchema)
+		validators: zodClient(createPartnerSchema),
+		dataType: "json"
 	});
 
 	const { form: formData, enhance, submitting, errors } = form;
+
+	let selectedMunicipality = $derived(
+		$formData.municipality
+			? {
+					label: $formData.municipality,
+					value: $formData.municipality
+				}
+			: undefined
+	);
+
+	$effect(() => {
+		console.log($formData.municipality, "FORM DATA");
+	});
 </script>
 
 <Sheet.Root>
@@ -41,6 +60,29 @@
 				<Form.Control let:attrs>
 					<Form.Label>Name</Form.Label>
 					<Input {...attrs} bind:value={$formData.name} />
+				</Form.Control>
+				<Form.FieldErrors />
+			</Form.Field>
+
+			<Form.Field {form} name="municipality">
+				<Form.Control let:attrs>
+					<Form.Label>Municipality</Form.Label>
+					<Select.Root
+						selected={selectedMunicipality}
+						onSelectedChange={(v) => {
+							console.log(v);
+							v && ($formData.municipality = v.value);
+						}}
+					>
+						<Select.Trigger {...attrs}>
+							<Select.Value placeholder="Select municipality" />
+						</Select.Trigger>
+						<Select.Content>
+							{#each MUNICIPALITIES as m}
+								<Select.Item value={m} label={m} />
+							{/each}
+						</Select.Content>
+					</Select.Root>
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>

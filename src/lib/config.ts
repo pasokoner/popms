@@ -35,3 +35,17 @@ export const links: Record<
 		{ href: "/partner/request", label: "Price Request", icon: DiamondPercent }
 	]
 };
+
+export const MUNICIPALITIES = [
+	"Abucay",
+	"Bagac",
+	"City of Balanga",
+	"Hermosa",
+	"Limay",
+	"Mariveles",
+	"Morong",
+	"Pilar",
+	"Orani",
+	"Orion",
+	"Samal"
+];

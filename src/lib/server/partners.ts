@@ -22,7 +22,7 @@ export async function createPartnerAction(event: RequestEvent) {
 
 	if (!form.valid) return fail(400, { form });
 
-	const { email, password, name } = form.data;
+	const { email, password, name, municipality } = form.data;
 
 	const userId = generateIdFromEntropySize(10); // 16 characters long
 	const hashedPassword = await hash(password, {
@@ -45,9 +45,10 @@ export async function createPartnerAction(event: RequestEvent) {
 				.execute();
 
 			await tx.insert(partner).values({
+				name,
+				municipality,
 				departmentId: department.id,
-				ownerId: userId,
-				name: name
+				ownerId: userId
 			});
 		});
 	} catch (e) {
