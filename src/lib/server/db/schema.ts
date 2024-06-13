@@ -193,4 +193,5 @@ export type PartnerWithUser = Partner & {
 
 export type PartnerProductWithProduct = PartnerProduct & {
 	product: Product;
+	partner: Partner;
 };

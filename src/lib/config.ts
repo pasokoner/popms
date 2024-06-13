@@ -4,7 +4,8 @@ import {
 	LayoutDashboardIcon,
 	HandshakeIcon,
 	BoxIcon,
-	DiamondPercent
+	DiamondPercent,
+	GitPullRequestIcon
 } from "lucide-svelte";
 import type { UserRole } from "./server/db/schema";
 
@@ -25,6 +26,7 @@ export const links: Record<
 	admin: [{ href: "/admin/departments", label: "Departments", icon: UsersRoundIcon }],
 	department: [
 		{ href: "/department/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
+		{ href: "/department/pending-request", label: "Pending Request", icon: GitPullRequestIcon },
 		{ href: "/department/products", label: "Products", icon: BoxIcon },
 		{ href: "/department/partners", label: "Partners", icon: HandshakeIcon }
 	],
