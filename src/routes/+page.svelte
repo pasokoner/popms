@@ -5,27 +5,33 @@
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
 	import Button from "$lib/components/ui/button/button.svelte";
+	import Label from "$lib/components/ui/label/label.svelte";
+	import { MUNICIPALITIES } from "$lib/config";
+	import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
+	import { URLSearchParams } from "svelte/reactivity";
 
 	let { data } = $props();
 
+	const query = new URLSearchParams($page.url.searchParams);
+
 	let q = $state($page.url.searchParams.get("q") || "");
 
-	$effect(() => {
-		let query = new URLSearchParams($page.url.searchParams.toString());
+	let checkedMunicipality: string[] = $state([]);
 
+	$effect(() => {
 		if (!q) {
 			query.delete("q");
+		} else {
+			query.set("q", q.trim());
+		}
 
-			goto(`?${query.toString()}`, { keepFocus: true });
-
-			return;
+		if (checkedMunicipality.length > 0) {
+			query.set("municipalities", checkedMunicipality.join(","));
+		} else {
+			query.delete("municipalities");
 		}
 
 		let timeoutId = setTimeout(() => {
-			let query = new URLSearchParams($page.url.searchParams.toString());
-
-			query.set("q", q.trim());
-
 			goto(`?${query.toString()}`, { keepFocus: true });
 		}, 300);
 
@@ -48,56 +54,64 @@
 
 			<Select.Root>
 				<Select.Trigger class="w-[180px]">
-					<Select.Value placeholder="Theme" />
+					<Select.Value placeholder="Municipality" />
 				</Select.Trigger>
 				<Select.Content>
-					<Select.Item value="light">Light</Select.Item>
-					<Select.Item value="dark">Dark</Select.Item>
-					<Select.Item value="system">System</Select.Item>
-				</Select.Content>
-			</Select.Root>
-
-			<Select.Root>
-				<Select.Trigger class="w-[180px]">
-					<Select.Value placeholder="Theme" />
-				</Select.Trigger>
-				<Select.Content>
-					<Select.Item value="light">Light</Select.Item>
-					<Select.Item value="dark">Dark</Select.Item>
-					<Select.Item value="system">System</Select.Item>
+					<ScrollArea class="h-72">
+						{#each MUNICIPALITIES as m}
+							<div class="p-2">
+								<Label class="flex items-center gap-x-2 text-sm">
+									<input
+										name="municipalities"
+										type="checkbox"
+										value={m}
+										bind:group={checkedMunicipality}
+										class="size-5 appearance-none rounded-md border bg-white checked:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-offset-0"
+									/>
+									{m}
+								</Label>
+							</div>
+						{/each}
+					</ScrollArea>
+					<Button
+						variant="secondary"
+						class="w-full underline"
+						onclick={() => (checkedMunicipality = [])}>Clear Filter</Button
+					>
 				</Select.Content>
 			</Select.Root>
 		</div>
 
 		<!-- PRODUCT CARDS -->
-
 		{#await data.products}
 			LOADING...
 		{:then products}
 			{#if products.length > 0}
 				<div class="grid grid-cols-12 gap-6">
 					{#each products as { product, partners, avgPrice }}
-						<Card.Root class="group col-span-3">
-							<Card.Header>
-								<Card.Title>{product.name}</Card.Title>
-								<Card.Description>&#x20B1; {avgPrice} / {product.unit}</Card.Description>
-							</Card.Header>
-							<Card.Content class="flex gap-x-4">
-								<div class="size-20 rounded-md bg-gray-200"></div>
-								<div class="flex-1 text-sm text-muted-foreground">
-									<p>Price: &#x20B1;{avgPrice}</p>
-									<p>Unit: {product.unit}</p>
-								</div>
-							</Card.Content>
-							<Card.Footer class="flex-col items-start gap-y-1">
-								<p class="text-sm font-medium text-muted-foreground">Lowest Price Guarantee</p>
-								<div class="text-xs">
-									{#each partners as partner}
-										<p class="capitalize">{partner.name}</p>
-									{/each}
-								</div>
-							</Card.Footer>
-						</Card.Root>
+						<a href="/product/{product.id}" class="col-span-3">
+							<Card.Root>
+								<Card.Header>
+									<Card.Title>{product.name}</Card.Title>
+									<Card.Description>&#x20B1; {avgPrice} / {product.unit}</Card.Description>
+								</Card.Header>
+								<Card.Content class="flex gap-x-4">
+									<div class="size-20 rounded-md bg-gray-200"></div>
+									<div class="flex-1 text-sm text-muted-foreground">
+										<p>AVG Price: &#x20B1;{avgPrice}</p>
+										<p>Unit: {product.unit}</p>
+									</div>
+								</Card.Content>
+								<Card.Footer class="flex-col items-start gap-y-1">
+									<p class="text-sm font-medium text-muted-foreground">Lowest Price Guarantee</p>
+									<div class="text-xs">
+										{#each partners as partner}
+											<p class="capitalize">{partner.name}</p>
+										{/each}
+									</div>
+								</Card.Footer>
+							</Card.Root>
+						</a>
 					{/each}
 				</div>
 			{:else}

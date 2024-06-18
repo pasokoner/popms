@@ -1,6 +1,8 @@
 <script>
 	import "../app.pcss";
 	import { Toaster } from "$lib/components/ui/sonner";
+
+	let { children } = $props();
 </script>
 
 <svelte:head>
@@ -9,4 +11,4 @@
 
 <Toaster richColors theme="light" />
 
-<slot />
+{@render children()}

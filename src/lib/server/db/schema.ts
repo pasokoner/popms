@@ -90,7 +90,7 @@ export const partner = pgTable(
 	"partner",
 	{
 		id: uuid("id").defaultRandom().primaryKey(),
-		name: varchar("name", { length: 255 }).notNull(),
+		name: varchar("name", { length: 255 }).notNull().unique(),
 		municipality: text("municipality").notNull(),
 		departmentId: uuid("department_id")
 			.notNull()
@@ -190,6 +190,10 @@ export type DepartmentWithOwner = Department & {
 
 export type PartnerWithUser = Partner & {
 	user: Omit<User, "hashedPassword">;
+};
+
+export type PartnerWithPartnerProduct = Partner & {
+	partnerProducts: PartnerProduct[];
 };
 
 export type PartnerProductWithProduct = PartnerProduct & {
