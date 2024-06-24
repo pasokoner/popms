@@ -49,10 +49,10 @@ export async function getUserDetails(event: RequestEvent) {
 export function getUserRedirect(role: UserRole) {
 	switch (role) {
 		case "admin":
-			return "/admin";
+			return "/app/admin";
 		case "department":
-			return "/department/dashboard";
+			return "/app/department/dashboard";
 		case "partner":
-			return "/partner/dashboard";
+			return "/app/partner/dashboard";
 	}
 }

@@ -4,6 +4,7 @@
 	import * as Table from "$lib/components/ui/table";
 	import DataTableActions from "./data-actions.svelte";
 	import type { Product } from "$lib/server/db/schema.ts";
+	import { format } from "date-fns";
 
 	let { data = [] }: { data: Product[] } = $props();
 
@@ -22,7 +23,10 @@
 		}),
 		table.column({
 			accessor: "updatedAt",
-			header: "Updated At"
+			header: "Updated At",
+			cell: ({ value }) => {
+				return format(new Date(value), "dd/MM/yyyy");
+			}
 		}),
 		table.column({
 			accessor: (product) => product,

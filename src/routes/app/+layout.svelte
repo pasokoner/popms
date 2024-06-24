@@ -5,9 +5,9 @@
 	import ScrollArea from "$lib/components/ui/scroll-area/scroll-area.svelte";
 	import NavLink from "$lib/components/nav-link.svelte";
 	import { links } from "$lib/config";
-	import { LogOutIcon, Building2Icon } from "lucide-svelte";
+	import { LogOutIcon, Building2Icon, AlignJustifyIcon } from "lucide-svelte";
 
-	let { data } = $props();
+	let { data, children } = $props();
 
 	let sidebarOpen = $state(false);
 
@@ -20,22 +20,14 @@
 	}
 </script>
 
-{#if sidebarOpen}
-	<Button
-		variant="outline"
-		class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 sm:hidden"
-		onclick={toggleSidebar}
-	/>
-{/if}
-
 <aside
 	class={cn(
-		"fixed left-0 top-0 z-50 flex h-screen w-64 -translate-x-full flex-col border-r transition-transform md:translate-x-0",
+		"fixed left-0 top-0 z-50 flex h-screen w-64 -translate-x-full flex-col border-r bg-white transition-transform md:translate-x-0",
 		sidebarOpen ? "translate-x-0" : "-translate-x-full"
 	)}
 >
-	<div class="flex h-16 items-center justify-center border-b px-4 py-2">
-		<h1 class="text-center text-2xl font-bold">POPMS</h1>
+	<div class="flex h-20 items-center justify-center border-b px-4 py-2">
+		<h1 class="text-center text-3xl font-bold">POPMS</h1>
 	</div>
 
 	<div class="flex flex-1 flex-col space-y-5 p-5 pb-12">
@@ -68,7 +60,16 @@
 </aside>
 
 <div class="flex min-h-screen flex-col md:ml-64">
-	<header class="flex h-16 w-full items-center justify-between border-b" />
+	<header class="flex h-20 w-full border-b bg-white md:hidden">
+		<div class="container flex h-full items-center justify-between">
+			<a href="/">
+				<h1 class="text-3xl font-bold">POPMS</h1>
+			</a>
 
-	<main class="container flex-1 pb-40 pt-6"><slot /></main>
+			<Button size="icon" variant="ghost" onclick={toggleSidebar}>
+				<AlignJustifyIcon />
+			</Button>
+		</div>
+	</header>
+	<main class="container flex-1 py-10">{@render children()}</main>
 </div>

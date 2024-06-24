@@ -38,7 +38,7 @@
 		const allDates = data.chartData.partnerProducts.map((v) => new Date(v.createdAt));
 		const sortedDates = allDates.sort((a, b) => a.getTime() - b.getTime());
 
-		return sortedDates.map((d) => format(d, "dd/MM"));
+		return sortedDates.map((d) => format(d, "MM/dd"));
 	});
 
 	$effect(() => {
@@ -64,7 +64,7 @@
 	$inspect(chartLabels);
 </script>
 
-<main class="container space-y-6 py-10">
+<div class="space-y-6">
 	<div class="flex items-center justify-center">
 		<div class="w-full max-w-3xl flex-1">
 			{#if chartDatasets.length > 0 && chartLabels.length > 0}
@@ -75,4 +75,4 @@
 	</div>
 
 	<DataTable data={data.partners} />
-</main>
+</div>

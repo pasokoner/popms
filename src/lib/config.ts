@@ -23,16 +23,16 @@ export const links: Record<
 		sublinks?: SubLink[];
 	})[]
 > = {
-	admin: [{ href: "/admin/departments", label: "Departments", icon: UsersRoundIcon }],
+	admin: [{ href: "/app/admin/departments", label: "Departments", icon: UsersRoundIcon }],
 	department: [
-		{ href: "/department/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
-		{ href: "/department/pending-request", label: "Pending Request", icon: GitPullRequestIcon },
-		{ href: "/department/products", label: "Products", icon: BoxIcon },
-		{ href: "/department/partners", label: "Partners", icon: HandshakeIcon }
+		{ href: "/app/department/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
+		{ href: "/app/department/pending-request", label: "Pending Request", icon: GitPullRequestIcon },
+		{ href: "/app/department/products", label: "Products", icon: BoxIcon },
+		{ href: "/app/department/partners", label: "Partners", icon: HandshakeIcon }
 	],
 	partner: [
-		{ href: "/partner/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
-		{ href: "/partner/request", label: "Price Request", icon: DiamondPercent }
+		{ href: "/app/partner/dashboard", label: "Dashboard", icon: LayoutDashboardIcon },
+		{ href: "/app/partner/request", label: "Price Request", icon: DiamondPercent }
 	]
 };
 
