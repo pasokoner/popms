@@ -2,10 +2,12 @@
 	import { createTable, Render, Subscribe, createRender } from "svelte-headless-table";
 	import { writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
-	import DataTableActions from "./data-actions.svelte";
-	import type { PartnerProductWithProduct } from "$lib/server/db/schema.ts";
+	import DataTableActions from "./pcr-data-actions.svelte";
+	import type { PartnerProduct, Product } from "$lib/server/db/schema.ts";
+	import { format } from "date-fns";
+	import { page } from "$app/stores";
 
-	let { data = [] }: { data: PartnerProductWithProduct[] } = $props();
+	let { data = [] }: { data: (PartnerProduct & { product: Product })[] } = $props();
 
 	const products = writable(data);
 
@@ -26,7 +28,20 @@
 		}),
 		table.column({
 			accessor: "createdAt",
-			header: "Request Date"
+			header: "Date",
+			cell: ({ value }) => {
+				return format(new Date(value), "MM/dd/yyyy");
+			}
+		}),
+		table.column({
+			accessor: "id",
+			header: "",
+			cell: ({ value }) => {
+				return createRender(DataTableActions, {
+					partnerProductId: value,
+					deleteRequestForm: $page.data.deleteRequestForm
+				});
+			}
 		})
 	]);
 

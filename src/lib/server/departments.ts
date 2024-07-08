@@ -47,7 +47,7 @@ export async function createDepartmentAction(event: RequestEvent) {
 		// check for unique constraint error in user table
 		if (e instanceof postgres.PostgresError) {
 			if (e.constraint_name === "auth_user_email_unique") {
-				return setError(form, "email", "Email already taken");
+				console.log("USERNAME ALREADY TAKEN");
 			}
 		}
 

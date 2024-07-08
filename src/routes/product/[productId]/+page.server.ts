@@ -1,11 +1,13 @@
 import db from "$lib/server/db";
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
+import { getLatestAvgPrice } from "$lib/server/products";
 
 export const load: PageServerLoad = async ({ params, url }) => {
 	const { productId } = params;
 
 	const partnerQuery = url.searchParams.get("partner");
+	const q = url.searchParams.get("q");
 
 	const product = await db.query.product.findFirst({
 		where: (product, { eq }) => eq(product.id, productId)
@@ -36,6 +38,7 @@ export const load: PageServerLoad = async ({ params, url }) => {
 					orderBy: (partnerProduct, { asc }) => asc(partnerProduct.createdAt)
 				}
 			}
-		})
+		}),
+		products: getLatestAvgPrice(q)
 	};
 };

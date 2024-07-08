@@ -1,6 +1,7 @@
 import {
 	acceptRequestSchema,
 	createProductSchema,
+	deleteRequestSchema,
 	editProductSchema,
 	rejectRequestSchema
 } from "$lib/zod-schemas";
@@ -157,6 +158,35 @@ export async function rejectRequestAction(event: RequestEvent) {
 				updatedAt: new Date().toISOString()
 			})
 			.where(eq(partnerProduct.id, partnerProductId));
+	} catch (e) {
+		return setError(form, "", "Something went wrong");
+	}
+
+	return { form };
+}
+
+export async function deleteRequestAction(event: RequestEvent) {
+	const form = await superValidate(event, zod(deleteRequestSchema));
+
+	if (!form.valid) return fail(400, { form });
+
+	const { groupId } = await getUserDetails(event);
+	const { partnerProductId } = form.data;
+
+	const existingProduct = await db.query.partnerProduct.findFirst({
+		where: (partnerProduct, { eq }) => eq(partnerProduct.id, partnerProductId)
+	});
+
+	if (!existingProduct) return setError(form, "", "Product not found");
+
+	if (existingProduct.partnerId !== groupId) return setError(form, "", "Product not found");
+
+	if (existingProduct.status === "accepted") return setError(form, "", "Product already accepted");
+
+	if (existingProduct.status === "rejected") return setError(form, "", "Product already rejected");
+
+	try {
+		await db.delete(partnerProduct).where(eq(partnerProduct.id, partnerProductId));
 	} catch (e) {
 		return setError(form, "", "Something went wrong");
 	}

@@ -3,10 +3,11 @@
 	import { writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
 	import DataTableActions from "./data-actions.svelte";
-	import type { PartnerProductWithProduct } from "$lib/server/db/schema.ts";
+	import type { Partner, PartnerProduct, Product } from "$lib/server/db/schema.ts";
 	import { page } from "$app/stores";
 
-	let { data = [] }: { data: PartnerProductWithProduct[] } = $props();
+	let { data = [] }: { data: (PartnerProduct & { product: Product; partner: Partner })[] } =
+		$props();
 
 	const products = writable(data);
 

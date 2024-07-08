@@ -1,89 +1,12 @@
 {
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1715838596241,
-      "tag": "0000_tranquil_satana",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1715841546151,
-      "tag": "0001_wide_prism",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1716171902302,
-      "tag": "0002_sturdy_proteus",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1716337615625,
-      "tag": "0003_nosy_aqueduct",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1716340618012,
-      "tag": "0004_worried_power_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1716533302909,
-      "tag": "0005_nostalgic_hulk",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "5",
-      "when": 1716876845728,
-      "tag": "0006_luxuriant_jubilee",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "5",
-      "when": 1716967563703,
-      "tag": "0007_lumpy_mimic",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "5",
-      "when": 1717393636237,
-      "tag": "0008_small_lucky_pierre",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "5",
-      "when": 1717467417610,
-      "tag": "0009_real_xavin",
-      "breakpoints": true
-    },
-    {
-      "idx": 10,
-      "version": "5",
-      "when": 1718249400271,
-      "tag": "0010_remarkable_runaways",
-      "breakpoints": true
-    },
-    {
-      "idx": 11,
-      "version": "5",
-      "when": 1718694798786,
-      "tag": "0011_gray_black_tarantula",
+      "version": "7",
+      "when": 1720404217752,
+      "tag": "0000_regular_siren",
       "breakpoints": true
     }
   ]

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import DivWrapper from "$lib/components/div-wrapper.svelte";
 	import PartnerCreateSheetForm from "$lib/components/partner/partner-create-sheet-form.svelte";
 	import BrowseProductsDialog from "./browse-products-dialog.svelte";
 	import DataTable from "./data-table.svelte";
@@ -11,9 +12,9 @@
 </script>
 
 <div class="space-y-10">
-	<div class="space-y-5">
+	<DivWrapper class="space-y-5">
 		<div class="flex items-center justify-between">
-			<h2 class="font-medium">Tracked Products</h2>
+			<h2 class="text-xl font-medium">Tracked Products</h2>
 
 			<BrowseProductsDialog
 				trackedProducts={data.trackedProducts}
@@ -23,12 +24,12 @@
 			/>
 		</div>
 		<DataTable data={[]} />
-	</div>
+	</DivWrapper>
 
-	<div class="space-y-5">
+	<DivWrapper class="space-y-5">
 		<div class="flex items-center justify-between">
-			<h2 class="font-medium">Price Request</h2>
+			<h2 class="text-xl font-medium">Price Request</h2>
 		</div>
 		<PCRDataTable data={data.pendingProducts} />
-	</div>
+	</DivWrapper>
 </div>

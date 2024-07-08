@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createTable, Render, Subscribe, createRender } from "svelte-headless-table";
-	import { readable, writable } from "svelte/store";
+	import { writable } from "svelte/store";
 	import * as Table from "$lib/components/ui/table";
 	import DataTableActions from "./data-actions.svelte";
 	import type { PartnerWithUser } from "$lib/server/db/schema.ts";

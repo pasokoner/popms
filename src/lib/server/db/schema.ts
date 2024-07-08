@@ -191,12 +191,3 @@ export type DepartmentWithOwner = Department & {
 export type PartnerWithUser = Partner & {
 	user: Omit<User, "hashedPassword">;
 };
-
-export type PartnerWithPartnerProduct = Partner & {
-	partnerProducts: PartnerProduct[];
-};
-
-export type PartnerProductWithProduct = PartnerProduct & {
-	product: Product;
-	partner: Partner;
-};

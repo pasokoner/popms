@@ -24,7 +24,7 @@
 		theForm: SuperValidated<Infer<PriceChangeRequestSchema>>;
 	} = $props();
 
-	let open = $state(true);
+	let open = $state(false);
 
 	let pendingProductIds = $derived(pendingProducts.map((v) => v.productId));
 
@@ -97,8 +97,6 @@
 		<Dialog.Header>
 			<div class="grid grid-cols-2 gap-x-4">
 				<div class="flex h-[520px] flex-col gap-y-2">
-					<Input placeholder="Search product" />
-
 					<ScrollArea class="flex-1 rounded-md border p-4">
 						<div class="space-y-4">
 							{#each products.map( (v) => ({ ...v, isPending: pendingProductIds.includes(v.id) }) ) as p, i (p.id)}

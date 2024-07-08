@@ -59,6 +59,9 @@ const config = {
 			},
 			fontFamily: {
 				sans: ["Inter", ...fontFamily.sans]
+			},
+			screens: {
+				xs: "479px"
 			}
 		}
 	}

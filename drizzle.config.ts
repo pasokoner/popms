@@ -9,8 +9,8 @@ if (!process.env.DATABASE_URL) {
 export default {
 	schema: "./src/lib/server/db/schema.ts",
 	out: "./src/lib/server/db/migrations",
-	driver: "pg", // 'pg' | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
+	dialect: "postgresql", // 'pg' | 'mysql2' | 'better-sqlite' | 'libsql' | 'turso'
 	dbCredentials: {
-		connectionString: process.env.DATABASE_URL
+		url: process.env.DATABASE_URL
 	}
 } satisfies Config;

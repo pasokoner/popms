@@ -75,6 +75,10 @@ export const acceptRequestSchema = z.object({
 	partnerProductId: z.string().uuid()
 });
 
+export const deleteRequestSchema = z.object({
+	partnerProductId: z.string().uuid()
+});
+
 export type LoginSchema = typeof loginSchema;
 export type CreateDepartmentSchema = typeof createDepartmentSchema;
 export type CreatePartnerSchema = typeof createPartnerSchema;
@@ -84,3 +88,4 @@ export type EditProductSchema = typeof editProductSchema;
 export type PriceChangeRequestSchema = typeof priceChangeRequestSchema;
 export type RejectRequestSchema = typeof rejectRequestSchema;
 export type AcceptRequestSchema = typeof acceptRequestSchema;
+export type DeleteRequestSchema = typeof deleteRequestSchema;

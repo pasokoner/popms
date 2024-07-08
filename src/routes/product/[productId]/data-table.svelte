@@ -6,9 +6,9 @@
 	import { Button } from "$lib/components/ui/button";
 
 	import DataTableActions from "./data-actions.svelte";
-	import type { PartnerWithPartnerProduct, Product } from "$lib/server/db/schema.ts";
+	import type { PartnerProduct, Partner } from "$lib/server/db/schema.ts";
 
-	let { data = [] }: { data: PartnerWithPartnerProduct[] } = $props();
+	let { data = [] }: { data: (Partner & { partnerProducts: PartnerProduct[] })[] } = $props();
 
 	const products = writable(data);
 
