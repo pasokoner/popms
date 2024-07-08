@@ -9,11 +9,6 @@
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<thead
-	class={cn("bg-gray-100 text-gray-400 [&_tr]:border-b", className)}
-	{...$$restProps}
-	on:click
-	on:keydown
->
+<thead class={cn("[&_tr]:border-b", className)} {...$$restProps} on:click on:keydown>
 	<slot />
 </thead>
