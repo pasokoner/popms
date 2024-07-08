@@ -6,7 +6,7 @@ import { zod } from "sveltekit-superforms/adapters";
 import { verify } from "@node-rs/argon2";
 import db from "$lib/server/db";
 import { lucia } from "$lib/server/auth.js";
-import { getUserRedirect } from "$lib/server/user.js";
+import { getUserRedirect } from "$lib/utils";
 
 export const load = async (event) => {
 	if (event.locals.user) {

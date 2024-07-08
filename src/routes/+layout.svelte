@@ -1,5 +1,5 @@
 <script>
-	import "../app.pcss";
+	import "../app.css";
 	import { Toaster } from "$lib/components/ui/sonner";
 	import { page } from "$app/stores";
 
@@ -22,15 +22,11 @@
 			</div>
 		</header>
 
-		<div class="flex-1 py-10">
-			<main class="container">
-				{@render children()}
-			</main>
-		</div>
+		{@render children()}
 	</div>
-	<footer class="min-h-96 bg-black">
+	<!-- <footer class="min-h-96 bg-black">
 		<div class="container"></div>
-	</footer>
+	</footer> -->
 {:else}
 	{@render children()}
 {/if}
