@@ -83,7 +83,7 @@ export const department = pgTable("department", {
 	ownerId: text("owner_id")
 		.notNull()
 		.unique()
-		.references(() => user.id)
+		.references(() => user.id, { onDelete: "cascade" })
 });
 
 export const partner = pgTable(
