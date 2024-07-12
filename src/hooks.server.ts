@@ -1,7 +1,25 @@
 import { lucia } from "$lib/server/auth";
 import type { Handle } from "@sveltejs/kit";
+import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from "$env/static/public";
+import { createServerClient } from "@supabase/ssr";
 
 export const handle: Handle = async ({ event, resolve }) => {
+	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+		cookies: {
+			getAll: () => event.cookies.getAll(),
+			/**
+			 * SvelteKit's cookies API requires `path` to be explicitly set in
+			 * the cookie options. Setting `path` to `/` replicates previous/
+			 * standard behavior.
+			 */
+			setAll: (cookiesToSet) => {
+				cookiesToSet.forEach(({ name, value, options }) => {
+					event.cookies.set(name, value, { ...options, path: "/" });
+				});
+			}
+		}
+	});
+
 	const sessionId = event.cookies.get(lucia.sessionCookieName);
 	if (!sessionId) {
 		event.locals.user = null;
@@ -26,5 +44,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 	event.locals.user = user;
 	event.locals.session = session;
-	return resolve(event);
+	return resolve(event, {
+		filterSerializedResponseHeaders(name) {
+			return name === "content-range" || name === "x-supabase-api-version";
+		}
+	});
 };
