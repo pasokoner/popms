@@ -47,6 +47,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@carbon/charts-svelte": "^1.19.2",
 		"@fontsource/inter": "^5.0.19",
 		"@internationalized/date": "^3.5.4",
 		"@lucia-auth/adapter-drizzle": "^1.0.7",

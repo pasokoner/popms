@@ -59,10 +59,10 @@ export const flyAndScale = (
 export function getUserRedirect(role: UserRole) {
 	switch (role) {
 		case "admin":
-			return "/app/admin";
+			return "/app/admin/departments";
 		case "department":
-			return "/app/department/dashboard";
+			return "/app/department/pending-request";
 		case "partner":
-			return "/app/partner/dashboard";
+			return "/app/partner/products";
 	}
 }

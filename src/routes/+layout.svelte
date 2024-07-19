@@ -24,7 +24,7 @@
 
 		{@render children()}
 	</div>
-	<!-- <footer class="min-h-96 bg-black">
+	<!-- <footer class="min-h-96 bg-black">	
 		<div class="container"></div>
 	</footer> -->
 {:else}
